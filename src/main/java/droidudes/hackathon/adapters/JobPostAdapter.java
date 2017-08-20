@@ -22,10 +22,10 @@ public class JobPostAdapter extends RecyclerView.Adapter<JobPostViewHolder> {
     private List<JobPostBO> itemList;
     private OnRecyclerItemClick onRecyclerItemClick;
 
-    public JobPostAdapter(Context mContext, List<JobPostBO> itemList, OnRecyclerItemClick onRecyclerItemClick) {
+    public JobPostAdapter(Context mContext, List<JobPostBO> itemList, OnRecyclerItemClick onRecyclerItemClicking) {
         this.mContext = mContext;
         this.itemList = itemList;
-        this.onRecyclerItemClick = onRecyclerItemClick;
+        this.onRecyclerItemClick = onRecyclerItemClicking;
     }
 
     @Override
@@ -45,8 +45,8 @@ public class JobPostAdapter extends RecyclerView.Adapter<JobPostViewHolder> {
         return itemList.size();
     }
 
-    public void setItemList(List<JobPostBO> itemList) {
-        this.itemList = itemList;
+    public void setItemList(List<JobPostBO> newItems) {
+        this.itemList = newItems;
         notifyDataSetChanged();
     }
 }

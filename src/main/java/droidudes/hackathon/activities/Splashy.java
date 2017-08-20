@@ -17,9 +17,10 @@ public class Splashy extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(Splashy.this,TransGenderListActivity.class);///TransGenderListActivity.class);
+                Intent intent = new Intent(Splashy.this,LandingActivity.class);///TransGenderListActivity.class);
                 startActivity(intent);
+                finish();
             }
-        },1200);
+        },2000);
     }
 }

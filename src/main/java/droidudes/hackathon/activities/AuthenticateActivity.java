@@ -1,6 +1,7 @@
 package droidudes.hackathon.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -20,7 +21,6 @@ public class AuthenticateActivity extends AppCompatActivity {
     private Button loginBtn;
     private boolean isNGO = false;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +32,10 @@ public class AuthenticateActivity extends AppCompatActivity {
         passwordEt = (EditText) findViewById(R.id.et_password);
 
         forgotPassTv = (TextView) findViewById(R.id.tv_forgot_pass);
+
+        if (getIntent() != null) {
+            isNGO = getIntent().getExtras().getBoolean(KeyConst.IS_NGO, false);
+        }
 
         forgotPassTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,14 +51,21 @@ public class AuthenticateActivity extends AppCompatActivity {
                 if (emailEt.getText().toString().equalsIgnoreCase("zar")
                         && passwordEt.getText().toString().equalsIgnoreCase("123")) {
 
+                    if(isNGO == true){
+                        Intent intent = new Intent(mContext,NgoJobListActivity.class);
+                        intent.putExtra(KeyConst.IS_NGO, true);
+                        startActivity(intent);
+                    }
+                    else{
+                        Intent intent = new Intent(mContext,NgoJobListActivity.class);
+                        intent.putExtra(KeyConst.IS_NGO, false);
+                        startActivity(intent);
+                    }
+
                 } else {
                     Toast.makeText(mContext, "Email or Password wrong", Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-        if (getIntent() != null) {
-            isNGO = getIntent().getExtras().getBoolean(KeyConst.IS_NGO, false);
-        }
     }
 }

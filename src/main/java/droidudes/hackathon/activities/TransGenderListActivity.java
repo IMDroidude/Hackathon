@@ -26,9 +26,11 @@ import java.util.List;
 import droidudes.hackathon.R;
 import droidudes.hackathon.adapters.TransGenderAdapter;
 import droidudes.hackathon.common.Constants;
+import droidudes.hackathon.factories.TransgenderBOFactory;
 import droidudes.hackathon.interfaces.OnRecyclerItemClick;
 import droidudes.hackathon.models.TransGenderBO;
 import droidudes.hackathon.utilities.InternetOP;
+import droidudes.hackathon.utilities.RecyclerItemClickListener;
 
 /**
  * Created by Zare Ahmed on 17-Aug-17.
@@ -53,6 +55,36 @@ public class TransGenderListActivity extends AppCompatActivity {
 
         transGenderList = new ArrayList<>();
 
+        /*new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Query last = mRef.orderByKey().limitToLast(1);
+
+                last.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        int lastIndex = 0;
+                        for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+                            lastIndex = Integer.parseInt(childSnapshot.getKey());
+                        }
+
+                        TransGenderBO transGenderBO = new TransGenderBO();
+                        transGenderBO.setName("pushName");
+                        transGenderBO.setAge(13);
+                        mRef.child(""+(lastIndex+1)).setValue(transGenderBO);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(mContext,databaseError.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+            }
+        },2000);*/
+
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.setHasFixedSize(true);
@@ -62,7 +94,8 @@ public class TransGenderListActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getTransGenderListFromService();
+                ///getTransGenderListFromService();
+                getTransGenderListFromFactory();
             }
         });
 
@@ -74,13 +107,48 @@ public class TransGenderListActivity extends AppCompatActivity {
                 @Override
                 public void onItemClicked(View view, int position) {
 
-                    /*Intent intent = new Intent(mContext, McqActivity.class);
+                    /*TransGenderBO item = transGenderList.get(position);
+
+                    Intent intent = new Intent(mContext,JobDetailActivity.class);
+                    intent.putExtra("transGenderBOParcelable",item);
                     startActivity(intent);*/
                 }
             });
         }
         mRecyclerView.setAdapter(mAdapter);
-        getTransGenderListFromService();
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, mRecyclerView, new RecyclerItemClickListener
+                .OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                /*TransGenderBO item = transGenderList.get(position);
+
+                Intent intent = new Intent(mContext,JobDetailActivity.class);
+                intent.putExtra("transGenderBOParcelable",item);
+                startActivity(intent);*/
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                //handle longClick if any
+            }
+        }));
+
+        //getTransGenderListFromService();
+        getTransGenderListFromFactory();
+    }
+
+    private void getTransGenderListFromFactory() {
+
+        transGenderList = new TransgenderBOFactory().getTransGenderList();
+        if (transGenderList != null && transGenderList.size() > 0)
+            setDataToAdapter(transGenderList);
+
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void getTransGenderListFromService(){

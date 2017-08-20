@@ -40,7 +40,7 @@ public class CreateJobActivity extends AppCompatActivity {
         if (!jobNameEt.getText().toString().isEmpty()
                 && !workHourEt.getText().toString().isEmpty()
                 && !skillsEt.getText().toString().isEmpty()) {
-
+            Toast.makeText(mContext, "Job Posted...", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(mContext, "Some fields are misisng", Toast.LENGTH_LONG).show();
         }

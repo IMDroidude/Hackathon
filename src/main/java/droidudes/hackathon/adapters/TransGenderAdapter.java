@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+
 import java.util.List;
 import droidudes.hackathon.R;
 import droidudes.hackathon.interfaces.OnRecyclerItemClick;
@@ -30,6 +32,15 @@ public class TransGenderAdapter extends RecyclerView.Adapter<TransGenderViewHold
     public TransGenderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mView = LayoutInflater.from(mContext).inflate(R.layout.item_trans_gender_list,
                 parent, false);
+        try {
+            CheckBox checkBox = (CheckBox)mView.findViewById(R.id.checkbox);
+            if(checkBox.isChecked())
+                checkBox.setChecked(false);
+            else
+                checkBox.setChecked(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return new TransGenderViewHolder(mView, onRecyclerItemClick);
     }
 

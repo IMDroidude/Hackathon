@@ -12,21 +12,34 @@
 
     <EditText
         android:id="@+id/et_job_name"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="Job Name" />
+        android:hint="Job Title" />
 
     <EditText
         android:id="@+id/et_work_hour"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="Work Hour" />
+        android:hint="Work Hours" />
 
     <EditText
         android:id="@+id/et_skills"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="Skills you got" />
+        android:hint="Skills Required" />
+
+    <EditText
+        android:id="@+id/salary"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Salary" />
+
+    <EditText
+        android:id="@+id/job_description"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Job description" />
+
 
     <LinearLayout
         android:layout_width="match_parent"

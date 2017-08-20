@@ -2,7 +2,9 @@ package droidudes.hackathon.viewholders;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
+import droidudes.hackathon.R;
 import droidudes.hackathon.interfaces.OnRecyclerItemClick;
 import droidudes.hackathon.models.TransGenderBO;
 
@@ -12,12 +14,16 @@ import droidudes.hackathon.models.TransGenderBO;
 public class TransGenderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private OnRecyclerItemClick onRecyclerItemClick;
+    private TextView nameTv,ageTv,skillTv;
 
     public TransGenderViewHolder(View itemView, OnRecyclerItemClick onRecyclerItemClick) {
         super(itemView);
 
         this.onRecyclerItemClick = onRecyclerItemClick;
 
+        nameTv = (TextView) itemView.findViewById(R.id.tv_name);
+        ageTv = (TextView)  itemView.findViewById(R.id.tv_age);
+        skillTv = (TextView) itemView.findViewById(R.id.tv_skils);
         itemView.setOnClickListener(this);
     }
 
@@ -28,6 +34,10 @@ public class TransGenderViewHolder extends RecyclerView.ViewHolder implements Vi
     }
 
     public void bindData(TransGenderBO item){
-
+        if(item != null){
+            nameTv.setText(item.getName());
+            ageTv.setText(item.getAge() + "");
+            skillTv.setText(item.getSkills());
+        }
     }
 }

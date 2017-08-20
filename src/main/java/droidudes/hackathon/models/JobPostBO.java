@@ -1,32 +1,64 @@
 package droidudes.hackathon.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Zare Ahmed on 19-Aug-17.
  */
-public class JobPostBO {
+public class JobPostBO implements Parcelable {
 
-    private String name;
+    /*jobTitleTv,companyNameTv,workLocationTv,skillNeededTv,workHourTv;
+    private TextView detailDescTv,salaryTv;*/
+    private String jobTitle;
+    private String companyName;
+    private String workLocation;
+    private String skillNeeded;
     private String workHours;
-    private String skills;
-    private String ageGroup;
+    private String detailDesc;
+    private String salary;
 
-    public JobPostBO(){
 
-    }
-
-    public JobPostBO(String name, String workHours, String skills, String ageGroup) {
-        this.name = name;
+    public JobPostBO(String jobTitle, String companyName, String workLocation, String skillNeeded, String workHours, String detailDesc, String salary) {
+        this.jobTitle = jobTitle;
+        this.companyName = companyName;
+        this.workLocation = workLocation;
+        this.skillNeeded = skillNeeded;
         this.workHours = workHours;
-        this.skills = skills;
-        this.ageGroup = ageGroup;
+        this.detailDesc = detailDesc;
+        this.salary = salary;
     }
 
-    public String getName() {
-        return name;
+    public String getJobTitle() {
+        return jobTitle;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getWorkLocation() {
+        return workLocation;
+    }
+
+    public void setWorkLocation(String workLocation) {
+        this.workLocation = workLocation;
+    }
+
+    public String getSkillNeeded() {
+        return skillNeeded;
+    }
+
+    public void setSkillNeeded(String skillNeeded) {
+        this.skillNeeded = skillNeeded;
     }
 
     public String getWorkHours() {
@@ -37,19 +69,57 @@ public class JobPostBO {
         this.workHours = workHours;
     }
 
-    public String getSkills() {
-        return skills;
+    public String getDetailDesc() {
+        return detailDesc;
     }
 
-    public void setSkills(String skills) {
-        this.skills = skills;
+    public void setDetailDesc(String detailDesc) {
+        this.detailDesc = detailDesc;
     }
 
-    public String getAgeGroup() {
-        return ageGroup;
+    public String getSalary() {
+        return salary;
     }
 
-    public void setAgeGroup(String ageGroup) {
-        this.ageGroup = ageGroup;
+    public void setSalary(String salary) {
+        this.salary = salary;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.jobTitle);
+        dest.writeString(this.companyName);
+        dest.writeString(this.workLocation);
+        dest.writeString(this.skillNeeded);
+        dest.writeString(this.workHours);
+        dest.writeString(this.detailDesc);
+        dest.writeString(this.salary);
+    }
+
+    protected JobPostBO(Parcel in) {
+        this.jobTitle = in.readString();
+        this.companyName = in.readString();
+        this.workLocation = in.readString();
+        this.skillNeeded = in.readString();
+        this.workHours = in.readString();
+        this.detailDesc = in.readString();
+        this.salary = in.readString();
+    }
+
+    public static final Parcelable.Creator<JobPostBO> CREATOR = new Parcelable.Creator<JobPostBO>() {
+        @Override
+        public JobPostBO createFromParcel(Parcel source) {
+            return new JobPostBO(source);
+        }
+
+        @Override
+        public JobPostBO[] newArray(int size) {
+            return new JobPostBO[size];
+        }
+    };
 }

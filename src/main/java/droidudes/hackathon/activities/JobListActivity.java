@@ -2,6 +2,7 @@ package droidudes.hackathon.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import java.util.List;
 import droidudes.hackathon.R;
 import droidudes.hackathon.adapters.JobPostAdapter;
 import droidudes.hackathon.common.Constants;
+import droidudes.hackathon.factories.JobListFactory;
 import droidudes.hackathon.interfaces.OnRecyclerItemClick;
 import droidudes.hackathon.models.JobPostBO;
 import droidudes.hackathon.utilities.InternetOP;
@@ -35,7 +37,7 @@ public class JobListActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private TextView noResultTv;
-    private ProgressDialog mProgressDialog;
+    private ProgressDialog mProgressDialog = null;
     private DatabaseReference mRef;
     private List<JobPostBO> jobPostBOList;
     private JobPostAdapter mAdapter;
@@ -58,7 +60,8 @@ public class JobListActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getJobListFromService();
+                ///getJobListFromService();
+                getJobListFromFactory();
             }
         });
 
@@ -69,12 +72,31 @@ public class JobListActivity extends AppCompatActivity {
             mAdapter = new JobPostAdapter(mContext, jobPostBOList, new OnRecyclerItemClick() {
                 @Override
                 public void onItemClicked(View view, int position) {
+                    JobPostBO item = jobPostBOList.get(position);
+
+                    Intent intent = new Intent(mContext,JobDetailActivity.class);
+
+                    intent.putExtra("jobBOParcelable",item);
+                    startActivity(intent);
 
                 }
             });
         }
         mRecyclerView.setAdapter(mAdapter);
-        getJobListFromService();
+        ///getJobListFromService();
+        getJobListFromFactory();
+    }
+
+    private void getJobListFromFactory(){
+        jobPostBOList = new ArrayList<>();
+
+        jobPostBOList = new JobListFactory().getJobPostBO();
+        if(jobPostBOList != null && jobPostBOList.size() > 0)
+            setDataToAdapter(jobPostBOList);
+
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     private void getJobListFromService(){
@@ -120,7 +142,7 @@ public class JobListActivity extends AppCompatActivity {
             noResultTv.setText(getString(R.string.internet_na));
         }
 
-        if (mSwipeRefreshLayout != null) {
+        if (mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.setRefreshing(false);
         }
     }

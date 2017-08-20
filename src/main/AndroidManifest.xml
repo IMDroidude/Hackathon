@@ -10,7 +10,7 @@
     <application
         android:name=".AppMain"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon_of_app"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -47,7 +47,13 @@
         <activity android:name=".activities.AuthenticateActivity" />
         <activity android:name=".activities.JobListActivity" />
         <activity android:name=".activities.CreateJobActivity" />
-        <activity android:name=".activities.SignUpActivity"></activity>
+        <activity android:name=".activities.SignUpActivity" />
+        <activity android:name=".activities.NgoHomeActivity" />
+        <activity android:name=".activities.EmployeerHomeActivity" />
+        <activity android:name=".activities.JobDetailActivity" />
+        <activity android:name=".activities.NgoJobListActivity" />
+        <activity android:name=".activities.NewTransGenderListActivity" />
+        <activity android:name=".activities.CandidateProfileActivity"></activity>
     </application>
 
 </manifest>
