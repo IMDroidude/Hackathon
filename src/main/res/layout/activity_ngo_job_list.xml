@@ -32,6 +32,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:layout_width="30dp"
+        android:visibility="gone"
         android:layout_height="30dp" />
     <include layout="@layout/item_no_result" />
 </FrameLayout>

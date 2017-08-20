@@ -51,7 +51,7 @@ public class NgoJobListActivity extends AppCompatActivity {
         doneBtn = (Button) findViewById(R.id.btn_done);
 
         if(isNGO == false)
-            doneBtn.setVisibility(View.GONE);
+            doneBtn.setVisibility(View.VISIBLE);
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
